@@ -34,6 +34,12 @@ void CartPoleSystem::update(const float force, const float dt) {
     const float new_x = x + new_x_dot * dt;
     const float new_theta = theta + new_theta_dot * dt;
 
+    //5. update cart and pole state
+    cart.setPosition(new_x);
+    cart.setVelocity(new_x_dot);
+    pole.setAngle(new_theta);
+    pole.setAngularVelocity(new_theta_dot);
+
 }
 
 void CartPoleSystem::reset() {

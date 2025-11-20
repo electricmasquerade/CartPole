@@ -35,6 +35,10 @@ int main() {
         std::cout << "Pole angular velocity: " << state[3] << " rad/s" << std::endl;
         std::cout << std::endl;
         currentTime = currentTime + dt;
+        if (currentTime > 5.0f) {
+            std::cout << "Simulation time exceeded 5 seconds, stopping." << std::endl;
+            break;
+        }
     }
 
 

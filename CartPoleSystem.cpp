@@ -7,6 +7,11 @@ void CartPoleSystem::update(const float force, const float dt) {
         failed = true;
         return;
     }
+    // check for out of bounds of position for failure
+    if (fabs(cart.getPosition()) > 2.4f) { // assuming track limits at +/- 2.4 meters
+        failed = true;
+        return;
+    }
     // perform one physics time step update
 
     //1. read current state of cart and pole

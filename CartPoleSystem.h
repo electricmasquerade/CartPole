@@ -13,7 +13,7 @@ public:
         : cart(cart), pole(pole) {}
     ~CartPoleSystem() = default;
 
-    // getters
+    // getters, only use for viewing, do not
     [[nodiscard]] Cart& getCart() const { return cart; }
     [[nodiscard]] Pole& getPole() const { return pole; }
     [[nodiscard]] bool isFailed() const { return failed; }

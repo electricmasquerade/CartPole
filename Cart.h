@@ -6,10 +6,15 @@ public:
     Cart();
     Cart (const float mass, const float initialPosition)
         : mass(mass), position(initialPosition), velocity(0.0f) {}
+    ~Cart() = default;
 
     [[nodiscard]] float getMass () const { return mass; }
     [[nodiscard]] float getPosition () const { return position; }
     [[nodiscard]] float getVelocity () const { return velocity; }
+
+    void setPosition (const float newPosition) { position = newPosition; }
+    void setVelocity (const float newVelocity) { velocity = newVelocity; }
+    void setMass (const float newMass) { mass = newMass; }
 
 
 private:

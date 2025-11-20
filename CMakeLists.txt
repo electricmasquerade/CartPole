@@ -7,4 +7,6 @@ add_executable(CartPole main.cpp
         Cart.cpp
         Cart.h
         Pole.cpp
-        Pole.h)
+        Pole.h
+        CartPoleSystem.cpp
+        CartPoleSystem.h)

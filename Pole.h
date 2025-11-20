@@ -6,6 +6,7 @@ public:
     Pole();
     Pole (const float length, const float mass, const float initialAngle)
         : length(length), mass(mass), angle(initialAngle), angularVelocity(0.0f) {}
+    ~Pole() = default;
 
     //getters
     [[nodiscard]] float getLength() const { return length; }

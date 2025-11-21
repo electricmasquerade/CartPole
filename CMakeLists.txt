@@ -9,4 +9,8 @@ add_executable(CartPole main.cpp
         Pole.cpp
         Pole.h
         CartPoleSystem.cpp
-        CartPoleSystem.h)
+        CartPoleSystem.h
+        Genome.cpp
+        Genome.h
+        Simulation.cpp
+        Simulation.h)

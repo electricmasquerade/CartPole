@@ -3,7 +3,7 @@
 // the pole that balances on the cart
 class Pole {
 public:
-    Pole();
+    Pole() = default;
     Pole (const float length, const float mass, const float initialAngle)
         : length(length), mass(mass), angle(initialAngle), angularVelocity(0.0f) {}
     ~Pole() = default;

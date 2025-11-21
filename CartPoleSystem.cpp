@@ -1,27 +1,30 @@
 #include "CartPoleSystem.h"
+#include <cmath>
+
+
+
+void CartPoleSystem::initialize(const State state) {
+    cart.setPosition(state.cartPosition);
+    cart.setVelocity(state.cartVelocity);
+    pole.setAngle(state.poleAngle);
+    pole.setAngularVelocity(state.poleAngularVelocity);
+    failed = false;
+}
 
 void CartPoleSystem::update(const float force, const float dt) {
 
-    //check for failure condition
-    if (fabs(pole.getAngle()) > failureAngle) {
-        failed = true;
-        return;
-    }
-    // check for out of bounds of position for failure
-    if (fabs(cart.getPosition()) > 2.4f) { // assuming track limits at +/- 2.4 meters
-        failed = true;
-        return;
-    }
+
     // perform one physics time step update
 
-    //1. read current state of cart and pole
+    //1. read the current state of cart and pole
+
     const float x = cart.getPosition();
     const float x_dot = cart.getVelocity();
     const float theta = pole.getAngle();
     const float theta_dot = pole.getAngularVelocity();
 
     //2. compute accelerations (theta then x)
-    const float theta_double_dot = (gravity * sin(theta) + cos(theta) * ((-force - pole.getMass() * pole.getLength() *
+    const float theta_double_dot = (gravity * sin(theta) + cos(theta) * ((force - pole.getMass() * pole.getLength() *
         theta_dot * theta_dot * sin(theta))
         / (cart.getMass() + pole.getMass())))
         / (pole.getLength() * (4.0f/3.0f - (pole.getMass() * cos(theta) * cos(theta))
@@ -44,7 +47,10 @@ void CartPoleSystem::update(const float force, const float dt) {
     cart.setVelocity(new_x_dot);
     pole.setAngle(new_theta);
     pole.setAngularVelocity(new_theta_dot);
-
+    //check for failure condition
+    if (fabs(pole.getAngle()) > failureAngle || fabs(cart.getPosition()) > 2.4f){
+        failed = true;
+    }
 }
 
 void CartPoleSystem::reset() {
@@ -54,4 +60,3 @@ void CartPoleSystem::reset() {
     pole.setAngularVelocity(0.0f);
     failed = false;
 }
-

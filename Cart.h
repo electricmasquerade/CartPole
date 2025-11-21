@@ -3,7 +3,7 @@
 // This defines the Cart class for the cart-pole system
 class Cart {
 public:
-    Cart();
+    Cart() = default;
     Cart (const float mass, const float initialPosition)
         : mass(mass), position(initialPosition), velocity(0.0f) {}
     ~Cart() = default;

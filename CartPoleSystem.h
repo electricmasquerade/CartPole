@@ -1,24 +1,33 @@
 #pragma once
 
-#include <vector>
 
 #include "Cart.h"
 #include "Pole.h"
 
+struct State {
+    float cartPosition;
+    float cartVelocity;
+    float poleAngle;
+    float poleAngularVelocity;
+};
 
 class CartPoleSystem {
 public:
-    CartPoleSystem();
-    CartPoleSystem(Cart& cart, Pole& pole)
+    CartPoleSystem() {
+        //create default cart and pole
+        cart = Cart(1.0f, 0.0f);
+        pole = Pole(0.1f, 0.5f, 0.0f);
+    };
+    CartPoleSystem(const Cart& cart, const Pole& pole)
         : cart(cart), pole(pole) {}
     ~CartPoleSystem() = default;
 
     // getters, only use for viewing, do not
-    [[nodiscard]] Cart& getCart() const { return cart; }
-    [[nodiscard]] Pole& getPole() const { return pole; }
+    //[[nodiscard]] Cart& getCart() const { return cart; }
+    //[[nodiscard]] Pole& getPole() const { return pole; }
     [[nodiscard]] bool isFailed() const { return failed; }
     // simulation methods
-    [[nodiscard]] std::vector<float> getState() const{
+    [[nodiscard]] State getState() const{
         return {cart.getPosition(), cart.getVelocity(), pole.getAngle(), pole.getAngularVelocity()};
     }
 
@@ -30,14 +39,14 @@ public:
         failed = true;
     }
 
-
+    void initialize(State state);
     void update(float force, float dt);
     void reset();
 
 
 private:
-    Cart& cart;
-    Pole& pole;
+    Cart cart;
+    Pole pole;
     bool failed = false;
     const float gravity = 9.81f; // gravitational acceleration in m/s^2
     const float PI = 3.14159f;

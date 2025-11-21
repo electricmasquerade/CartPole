@@ -24,10 +24,12 @@ void Genome::randomize() {
 
 void Genome::mutate(const float mutationRate, const float mutationAmount) {
     //mutate each weight with a given mutation rate chance
+    std::uniform_real_distribution randDist(0.0f, 1.0f);  // For mutation chance
+    std::uniform_real_distribution mutationDist(-mutationAmount, mutationAmount);  // For mutation size
     for (auto& weight : genome) {
-        std::uniform_real_distribution<float> dist(-1,1.0);
-        if (const float randVal = dist(rng); randVal < mutationRate) {
-            const float mutation = dist(rng) * mutationAmount; // random mutation between -mutationAmount and +mutationAmount
+
+        if (randDist(rng) < mutationRate) {
+            const float mutation = mutationDist(rng) * mutationAmount; // random mutation between -mutationAmount and +mutationAmount
             weight += mutation;
             //clamp weight to be between max and min
             if (weight > max_weight) weight = max_weight;

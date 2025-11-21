@@ -10,6 +10,7 @@ Simulation::Simulation() {
 void Simulation::initialize() {
     //fill population with random genomes
     for (auto& genome : population) {
+        genome.setMaxWeight(maxWeight);
         genome.randomize();
     }
 }
@@ -31,6 +32,17 @@ void Simulation::runGeneration(const float simulationTime, const float timeStep)
             cartPoleSystem.update(force, timeStep);
             currentTime += timeStep;
         }
+        if (currentTime >= simulationTime - timeStep) {
+            std::cout << "FULL TIME! Final state: angle=" << cartPoleSystem.getState().poleAngle
+                      << " pos=" << cartPoleSystem.getState().cartPosition << std::endl;
+        }
+        float diversitySum = 0;
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                diversitySum += abs(population[i].getGenome()[j] - population[size-1].getGenome()[j]);
+            }
+        }
+        std::cout << "Diversity (best vs worst): " << diversitySum << std::endl;
         // calculate fitness based on time survived out of max simulation time
         const float fitness = currentTime;// / simulationTime;
         genome.setFitness(fitness);
@@ -70,7 +82,7 @@ Genome Simulation::tournament(const int tournSize) const {
 }
 
 void Simulation::evolvePopulation(const float mutationRate, const float mutationAmount) {
-    const int tournamentSize = size * tournamentPercent / 100;
+
     sortByFitness();
     std::vector<Genome> newPopulation;
     newPopulation.reserve(size);
@@ -83,8 +95,9 @@ void Simulation::evolvePopulation(const float mutationRate, const float mutation
         Genome parent1 = tournament(tournamentSize);
         Genome parent2 = tournament(tournamentSize);
         Genome offspring = crossover(parent1, parent2);
-        offspring.mutate(mutationRate, mutationAmount);
         offspring.setMaxWeight(maxWeight);
+        offspring.mutate(mutationRate, mutationAmount);
+
         newPopulation.push_back(offspring);
     }
     population = newPopulation;

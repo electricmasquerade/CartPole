@@ -27,9 +27,7 @@ public:
         return population.front().getFitness();
     }
 
-    void setTournamentPercent(const int percent) {
-        tournamentPercent = percent;
-    }
+
 
     void setMaxWeight(const float maxW) {
         maxWeight = maxW;
@@ -48,8 +46,8 @@ private:
     int size = 100;
     CartPoleSystem cartPoleSystem; //use this and reset to run multiple sims
     State initialState{0.0f, 0.0f, 0.0f, 0.0f};
-    int tournamentPercent{3};
-    int numElites{10};
+    int tournamentSize{5};
+    int numElites{5};
     float maxWeight = 1.0f;
 
 

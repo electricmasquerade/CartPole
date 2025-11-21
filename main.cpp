@@ -5,25 +5,25 @@
 #include "Simulation.h"
 
 int main() {
-    constexpr State initialState{0.0f, 0.0f, 0.1f, 0.0f};
+    constexpr State initialState{0.0f, 0.0f, 0.2f, 0.0f};
 
     Simulation simulation(200, initialState);
 
 
 
     //test the physics of the system with a simple update
-    constexpr float dt = 1.0f/60.0f; // time step of 60 Hz
+    constexpr float dt = 1.0f/120.0f; // time step of 60 Hz
     constexpr float mutationAmount = 2.0f;
     constexpr float mutationRate = 0.2f;
-    constexpr int numGenerations = 1000;
-    constexpr float maxWeight = 10.0f;
+    constexpr int numGenerations = 100;
+    constexpr float maxWeight = 100.0f;
     simulation.setMaxWeight(maxWeight);
 
     simulation.initialize();
     for (int i = 0; i < 5; i++) {
         auto genome = simulation.getPopulation()[i].getGenome();
         std::cout << "Genome " << i << ": ";
-        for (auto w : genome) std::cout << w << " ";
+        for (const auto w : genome) std::cout << w << " ";
         std::cout << std::endl;
     }
 

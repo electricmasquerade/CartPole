@@ -12,11 +12,19 @@ int main() {
 
 
     //test the physics of the system with a simple update
-    constexpr float force = 0.0f; // apply a force of 10 N to the cart
     constexpr float dt = 1.0f/60.0f; // time step of 60 Hz
+    constexpr float mutationAmount = 0.2f;
+    constexpr float mutationRate = 0.1f;
+    constexpr int numGenerations = 1000;
 
 
-    simulation.runGeneration(30, dt);
+    //run 10 generations
+    for (int generation = 0; generation < numGenerations; ++generation) {
+        std::cout << "Generation " << generation << std::endl;
+        simulation.runGeneration(30.0f, dt); // run each genome for 20 seconds
+        std::cout << "Best fitness: " << simulation.getBestFitness() << std::endl;
+        simulation.evolvePopulation(mutationRate, mutationAmount);
+    }
 
     // cartPoleSystem.update(force, dt);
     // currentTime = currentTime + dt;

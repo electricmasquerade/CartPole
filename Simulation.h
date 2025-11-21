@@ -16,6 +16,16 @@ public:
 
     void initialize();
     void runGeneration(float simulationTime, float timeStep);
+    void sortByFitness();
+    [[nodiscard]] Genome tournament(int tournamentSize) const;
+    void evolvePopulation(float mutationRate, float mutationAmount);
+
+    static Genome crossover(const Genome& parent1, const Genome& parent2);
+
+    [[nodiscard]] float getBestFitness() {
+        sortByFitness();
+        return population.front().getFitness();
+    }
 
 
 

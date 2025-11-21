@@ -16,7 +16,7 @@ public:
     CartPoleSystem() {
         //create default cart and pole
         cart = Cart(1.0f, 0.0f);
-        pole = Pole(0.1f, 0.5f, 0.0f);
+        pole = Pole(0.1f, 0.5f, 0.0f, 0.0f);
     };
     CartPoleSystem(const Cart& cart, const Pole& pole)
         : cart(cart), pole(pole) {}

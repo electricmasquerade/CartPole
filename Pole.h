@@ -4,8 +4,8 @@
 class Pole {
 public:
     Pole() = default;
-    Pole (const float length, const float mass, const float initialAngle)
-        : length(length), mass(mass), angle(initialAngle), angularVelocity(0.0f) {}
+    Pole (const float length, const float mass, const float initialAngle, const float initialAngularVelocity)
+        : length(length), mass(mass), angle(initialAngle), angularVelocity(initialAngularVelocity) {}
     ~Pole() = default;
 
     //getters

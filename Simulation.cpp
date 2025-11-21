@@ -32,7 +32,7 @@ void Simulation::runGeneration(const float simulationTime, const float timeStep)
             currentTime += timeStep;
         }
         // calculate fitness based on time survived out of max simulation time
-        const float fitness = currentTime / simulationTime;
+        const float fitness = currentTime;// / simulationTime;
         genome.setFitness(fitness);
         cartPoleSystem.reset();
         //std::cout << fitness << std::endl;
@@ -75,7 +75,7 @@ void Simulation::evolvePopulation(const float mutationRate, const float mutation
     std::vector<Genome> newPopulation;
     newPopulation.reserve(size);
     //directly add top 10% to new population
-    for (int i = 0; i < tournamentSize; ++i) {
+    for (int i = 0; i < numElites; ++i) {
         newPopulation.push_back(population[i]);
     }
     //fill rest of population with crossover and mutation based on tournament selection

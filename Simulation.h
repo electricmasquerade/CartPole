@@ -49,6 +49,7 @@ private:
     CartPoleSystem cartPoleSystem; //use this and reset to run multiple sims
     State initialState{0.0f, 0.0f, 0.0f, 0.0f};
     int tournamentPercent{3};
+    int numElites{10};
     float maxWeight = 1.0f;
 
 

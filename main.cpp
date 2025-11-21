@@ -7,14 +7,14 @@
 int main() {
     constexpr State initialState{0.0f, 0.0f, 0.1f, 0.0f};
 
-    Simulation simulation(100, initialState);
+    Simulation simulation(200, initialState);
 
 
 
     //test the physics of the system with a simple update
     constexpr float dt = 1.0f/60.0f; // time step of 60 Hz
-    constexpr float mutationAmount = 0.2f;
-    constexpr float mutationRate = 0.1f;
+    constexpr float mutationAmount = 2.0f;
+    constexpr float mutationRate = 0.2f;
     constexpr int numGenerations = 1000;
     constexpr float maxWeight = 10.0f;
     simulation.setMaxWeight(maxWeight);
@@ -31,10 +31,18 @@ int main() {
     //run 10 generations
     for (int generation = 0; generation < numGenerations; ++generation) {
         std::cout << "Generation " << generation << std::endl;
-        simulation.runGeneration(30.0f, dt); // run each genome for 20 seconds
+        simulation.runGeneration(60.0f, dt); // run each genome for some number of seconds
         std::cout << "Best fitness: " << simulation.getBestFitness() << std::endl;
         simulation.evolvePopulation(mutationRate, mutationAmount);
     }
+
+    for (int i = 0; i < 5; i++) {
+        auto genome = simulation.getPopulation()[i].getGenome();
+        std::cout << "Genome " << i << ": ";
+        for (auto w : genome) std::cout << w << " ";
+        std::cout << std::endl;
+    }
+
 
     // cartPoleSystem.update(force, dt);
     // currentTime = currentTime + dt;

@@ -8,7 +8,7 @@ int main() {
     constexpr State initialState{0.0f, 0.0f, 0.1f, 0.0f};
 
     Simulation simulation(100, initialState);
-    simulation.initialize();
+
 
 
     //test the physics of the system with a simple update
@@ -16,6 +16,16 @@ int main() {
     constexpr float mutationAmount = 0.2f;
     constexpr float mutationRate = 0.1f;
     constexpr int numGenerations = 1000;
+    constexpr float maxWeight = 10.0f;
+    simulation.setMaxWeight(maxWeight);
+
+    simulation.initialize();
+    for (int i = 0; i < 5; i++) {
+        auto genome = simulation.getPopulation()[i].getGenome();
+        std::cout << "Genome " << i << ": ";
+        for (auto w : genome) std::cout << w << " ";
+        std::cout << std::endl;
+    }
 
 
     //run 10 generations

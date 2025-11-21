@@ -34,6 +34,7 @@ void Simulation::runGeneration(const float simulationTime, const float timeStep)
         // calculate fitness based on time survived out of max simulation time
         const float fitness = currentTime / simulationTime;
         genome.setFitness(fitness);
+        cartPoleSystem.reset();
         //std::cout << fitness << std::endl;
         //std::cout << std::endl;
     }
@@ -46,14 +47,14 @@ void Simulation::sortByFitness() {
     });
 }
 
-Genome Simulation::tournament(const int tournamentSize) const {
+Genome Simulation::tournament(const int tournSize) const {
     //return top genome from tournament selection
     std::vector<Genome> tournamentGenomes;
     //tournamentGenomes.resize(tournamentSize);
     //randomly select genomes for the tournament
     std::mt19937 rng(std::random_device{}());
-    std::uniform_int_distribution<int> dist(0, size - 1);
-    for (int i = 0; i < tournamentSize; ++i) {
+    std::uniform_int_distribution dist(0, size - 1);
+    for (int i = 0; i < tournSize; ++i) {
         const int index = dist(rng);
         tournamentGenomes.push_back(population[index]);
     }
@@ -68,8 +69,8 @@ Genome Simulation::tournament(const int tournamentSize) const {
 
 }
 
-void Simulation::evolvePopulation(float mutationRate, float mutationAmount) {
-    const int tournamentSize = size / 10;
+void Simulation::evolvePopulation(const float mutationRate, const float mutationAmount) {
+    const int tournamentSize = size * tournamentPercent / 100;
     sortByFitness();
     std::vector<Genome> newPopulation;
     newPopulation.reserve(size);
@@ -83,6 +84,7 @@ void Simulation::evolvePopulation(float mutationRate, float mutationAmount) {
         Genome parent2 = tournament(tournamentSize);
         Genome offspring = crossover(parent1, parent2);
         offspring.mutate(mutationRate, mutationAmount);
+        offspring.setMaxWeight(maxWeight);
         newPopulation.push_back(offspring);
     }
     population = newPopulation;
@@ -102,6 +104,7 @@ Genome Simulation::crossover(const Genome &parent1, const Genome &parent2) {
     //set offspring genome
     offspring.setGenome(newGenome);
     offspring.setFitness(0.0f);
+
 
 
     return offspring;

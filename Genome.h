@@ -16,11 +16,16 @@ public:
     [[nodiscard]] float getFitness() const { return fitness; }
 
     [[nodiscard]] const std::vector<float>& getGenome() const { return genome; }
+    void setMaxWeight(const float maxW) { max_weight = maxW; }
+    [[nodiscard]] float getMaxWeight() const { return max_weight; }
 
 private:
     std::vector<float> genome;
     float fitness = 0.0f;
-    std::mt19937 rng;
+    static inline std::mt19937 rng{std::random_device{}()};
+    float max_weight = 1.0f;
+
+
 
 
 };
